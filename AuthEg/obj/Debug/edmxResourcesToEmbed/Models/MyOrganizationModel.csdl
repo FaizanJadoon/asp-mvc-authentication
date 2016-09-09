@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="organizationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tbl_Dept">
+    <Key>
+      <PropertyRef Name="Did" />
+    </Key>
+    <Property Name="Did" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Dname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="HOD" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tbl_Emp" Relationship="Self.FK__tbl_Emp__Did__08EA5793" FromRole="tbl_Dept" ToRole="tbl_Emp" />
+  </EntityType>
+  <EntityType Name="tbl_Emp">
+    <Key>
+      <PropertyRef Name="Eid" />
+    </Key>
+    <Property Name="Eid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Did" Type="Int32" />
+    <Property Name="Ename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Esal" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="EGen" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="EDOB" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tbl_Dept" Relationship="Self.FK__tbl_Emp__Did__08EA5793" FromRole="tbl_Emp" ToRole="tbl_Dept" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK__tbl_Emp__Did__08EA5793">
+    <End Role="tbl_Dept" Type="Self.tbl_Dept" Multiplicity="0..1" />
+    <End Role="tbl_Emp" Type="Self.tbl_Emp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Dept">
+        <PropertyRef Name="Did" />
+      </Principal>
+      <Dependent Role="tbl_Emp">
+        <PropertyRef Name="Did" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="organizationEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tbl_Dept" EntityType="Self.tbl_Dept" />
+    <EntitySet Name="tbl_Emp" EntityType="Self.tbl_Emp" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK__tbl_Emp__Did__08EA5793" Association="Self.FK__tbl_Emp__Did__08EA5793">
+      <End Role="tbl_Dept" EntitySet="tbl_Dept" />
+      <End Role="tbl_Emp" EntitySet="tbl_Emp" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
